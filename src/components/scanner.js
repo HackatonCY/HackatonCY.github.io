@@ -12,7 +12,14 @@ export default ({ callback }) => {
 			await html5QrCode.start(cameraId, 
 				{
 					fps: 10,
-					qrbox: { width: 250, height: 250 },
+					qrbox: (viewfinderWidth, viewfinderHeight) => {
+						const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
+						const qrboxSize = Math.floor(minEdgeSize * 0.50);
+						return {
+							width: qrboxSize,
+							height: qrboxSize,
+						};
+					},
 				},
 				(text, result) => {
 					return callback(text, result, () => {
@@ -32,6 +39,6 @@ export default ({ callback }) => {
 	}, []);
 
 	return (
-		<div id='reader'/>
+		<div id='reader' style={ { width: '100%', height: '100%' } } />
 	);
 }

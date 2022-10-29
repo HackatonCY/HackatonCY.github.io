@@ -10,6 +10,9 @@ export default () => {
 	const navigate = useNavigate();
 
 	return (
-		<Scanner callback={ scan } />
+		<>
+			<Scanner callback={ scan } style={ {  } } />
+			<h4 style={ { position: 'absolute', textAlign: 'center', color: 'white', top: 0, width: '100%', padding: 12 } }>Scan for QR Code</h4> 
+		</>
 	);
 }
