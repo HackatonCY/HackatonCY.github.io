@@ -7,14 +7,14 @@ export default ({ callback }) => {
 
 		async function main() {
 			const devices = await Html5Qrcode.getCameras();
-			const cameraId = devices && devices.length ? devices[0].id : null;
+			const cameraId = devices && devices.length ? devices[devices.length - 1].id : null;
 
 			await html5QrCode.start(cameraId, 
 				{
 					fps: 10,
 					qrbox: (viewfinderWidth, viewfinderHeight) => {
 						const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
-						const qrboxSize = Math.floor(minEdgeSize * 0.50);
+						const qrboxSize = Math.floor(minEdgeSize * 0.70);
 						return {
 							width: qrboxSize,
 							height: qrboxSize,
