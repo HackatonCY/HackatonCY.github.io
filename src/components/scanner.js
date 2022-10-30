@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Html5Qrcode } from "html5-qrcode";
 
 export default ({ callback }) => {
+	const [ dev, setDev ] = useState([]);
+
 	useEffect(() => {
 		const html5QrCode = new Html5Qrcode('reader');
 
 		async function main() {
 			const devices = await Html5Qrcode.getCameras();
+			setDev(devices);
 			const cameraId = devices && devices.length ? devices[devices.length - 1].id : null;
 
 			await html5QrCode.start(cameraId, 
@@ -39,6 +42,18 @@ export default ({ callback }) => {
 	}, []);
 
 	return (
-		<div id='reader' style={ { width: '100%', height: '100%' } } />
+		<>
+			<div id='reader' style={ { width: '100%', height: '100%' } } />
+			<ul>
+			{
+				dev.map(d => {
+					console.log(d);
+					return (
+						<li key={ d.id }>{ d.label }</li>
+					);
+				})
+			}
+			</ul>
+		</>
 	);
 }
