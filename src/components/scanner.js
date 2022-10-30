@@ -2,17 +2,26 @@ import React, { useEffect, useState } from 'react';
 import { Html5Qrcode } from "html5-qrcode";
 
 export default ({ callback }) => {
-	const [ dev, setDev ] = useState([]);
+	const [ deviceList, setDeviceList ] = useState([]);
+	const [ cameraIndex, setCameraIndex ] = useState(0);
 
 	useEffect(() => {
 		const html5QrCode = new Html5Qrcode('reader');
 
 		async function main() {
+			console.log('111');
 			const devices = await Html5Qrcode.getCameras();
-			setDev(devices);
-			const cameraId = devices && devices.length ? devices[devices.length - 1].id : null;
+			setDeviceList(devices);
 
-			await html5QrCode.start(cameraId, 
+			let currentCameraIndex = 0;
+			if (devices && devices.length) {
+				currentCameraIndex = devices.length - 1;
+			} else {
+				throw new Error('Camera not found')
+			}
+			setCameraIndex(currentCameraIndex);
+
+			await html5QrCode.start(devices[currentCameraIndex].id, 
 				{
 					fps: 10,
 					qrbox: (viewfinderWidth, viewfinderHeight) => {
@@ -29,9 +38,8 @@ export default ({ callback }) => {
 						return html5QrCode.stop();
 					});
 				},
-				(errorMessage) => {
-					// parse error, ignore it.
-				});
+				(errorMessage) => {},
+			);
 		}
 
 		main().catch(console.error);
@@ -41,19 +49,17 @@ export default ({ callback }) => {
 		};
 	}, []);
 
+	function switchCamera() {
+		setCameraIndex(cameraIndex === deviceList.length - 1 ? 0 : cameraIndex + 1);
+	}
+
 	return (
 		<>
 			<div id='reader' style={ { width: '100%', height: '100%' } } />
-			<ul>
 			{
-				dev.map(d => {
-					console.log(d);
-					return (
-						<li key={ d.id }>{ d.label }</li>
-					);
-				})
+				// deviceList.length > 1 ??
+					<button onClick={ switchCamera }>Switch camera</button>
 			}
-			</ul>
 		</>
 	);
 }
