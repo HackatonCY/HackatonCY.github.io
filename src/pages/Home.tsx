@@ -26,7 +26,7 @@ export const Home: React.FC<HomeProps> = (props: HomeProps) => {
                     </Block>
                 </Col>
             </Row>
-            <Row className={"display-flex justify-content-center align-content-center"} style={{height: "20%"}}>
+            <Row className={"display-flex justify-content-center align-content-center"}>
                 <Col width={50}>
                     <Button
                         onClick={(ev) => props.onScanClick()}

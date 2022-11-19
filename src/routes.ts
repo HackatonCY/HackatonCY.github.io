@@ -13,7 +13,7 @@ export default [
                     f7.views.main.router.navigate("/scan")
                 },
                 onProductClick(productId: string) {
-                    f7.views.main.router.navigate(`/product/${productId}`);
+                    f7.views.main.router.navigate(`/product/${encodeURIComponent(productId)}`);
                 }
             }
         }
@@ -24,7 +24,7 @@ export default [
         options: {
             props: {
                 onScanned(scanResult: ScanResult) {
-                    f7.views.main.router.navigate(`/product/${scanResult.productId}`);
+                    f7.views.main.router.navigate(`/product/${encodeURIComponent(scanResult.productId)}`);
                 },
                 onBackClick() {
                     f7.views.main.router.navigate(`/`);
