@@ -12,7 +12,7 @@ export interface HomeProps {
 export const Home: React.FC<HomeProps> = (props: HomeProps) => {
     return (
         <Page>
-            <Row className={"display-flex justify-content-center"} style={{height: "45%"}}>
+            <Row className={"display-flex justify-content-center"}>
                 <Col width={100}>
                     <BlockTitle large>Check a product</BlockTitle>
                 </Col>
@@ -35,7 +35,7 @@ export const Home: React.FC<HomeProps> = (props: HomeProps) => {
                     </Button>
                 </Col>
             </Row>
-            <Row className={"display-flex align-content-flex-end"} resizable style={{height: "35%"}}>
+            <Row className={"display-flex align-content-flex-end"}>
                 <Col width={100}>
                     <BlockTitle>
                         Recently scanned products
